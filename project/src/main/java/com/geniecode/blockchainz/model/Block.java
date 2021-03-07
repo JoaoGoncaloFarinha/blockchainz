@@ -1,5 +1,6 @@
 package com.geniecode.blockchainz.model;
 
+import com.geniecode.blockchainz.util.SecurityUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,12 +36,24 @@ public class Block {
     /**
      * The class constructor.
      *
-     * @param data         the block data.
-     * @param previousHash the previous block hash.
+     * @param inputData         the block data.
+     * @param inputPreviousHash the previous block hash.
      */
-    public Block(final String data, final String previousHash) {
-        this.data = data;
-        this.previousHash = previousHash;
+    public Block(final String inputData, final String inputPreviousHash) {
+        this.data = inputData;
+        this.previousHash = inputPreviousHash;
         this.timeStamp = new Date().getTime();
+        this.hash = calculateHash();
+    }
+
+    /**
+     * Calculates the block hash.
+     *
+     * @return the block hash.
+     */
+    public String calculateHash() {
+        return SecurityUtils.applySha256(this.previousHash
+                + this.timeStamp
+                + this.data);
     }
 }

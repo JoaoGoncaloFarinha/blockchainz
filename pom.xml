@@ -19,12 +19,18 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.plugins.version>3.13.0</maven.plugins.version>
         <maven.checkstyle.version>3.1.2</maven.checkstyle.version>
+
         <!-- review this value -->
         <lombok.version>1.18.16</lombok.version>
+        <guava.version>20.0</guava.version>
 
         <!-- testing -->
         <jacoco.plugin.version>0.8.6</jacoco.plugin.version>
-        <jacoco.coverage.ratio>0.9</jacoco.coverage.ratio>
+        <jacoco.coverage.ratio>0.5</jacoco.coverage.ratio>
+
+        <!-- review this value -->
+        <junit.version>5.4.2</junit.version>
+        <maven-sufire.version>2.22.1</maven-sufire.version>
     </properties>
 
     <dependencyManagement>
@@ -35,6 +41,23 @@
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -43,13 +66,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>${maven.checkstyle.version}</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
                     <linkXRef>false</linkXRef>
-                    <checkstyleRules>
+                    <!--<checkstyleRules>
                         <module name="Checker">
                             <property name="severity" value="error"/>
                             <module name="TreeWalker">
@@ -61,7 +84,7 @@
                                 </module>
                             </module>
                         </module>
-                    </checkstyleRules>
+                    </checkstyleRules>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -116,6 +139,11 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-sufire.version}</version>
             </plugin>
         </plugins>
     </build>
